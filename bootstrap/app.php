@@ -13,6 +13,7 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware) {
         //
+        $middleware->prependToGroup('api', \App\Http\Middleware\AlwaysAcceptJson::class);
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //
