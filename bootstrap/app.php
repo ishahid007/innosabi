@@ -28,9 +28,4 @@ return Application::configure(basePath: dirname(__DIR__))
             return response()->json(['message' => 'Method not allowed'], 405);
         });
 
-        // Added for all other exceptions
-        $exceptions->renderable(function (Throwable $e) {
-            return response()->json(['message' => 'Internal server error'], 500);
-        });
-
     })->create();
