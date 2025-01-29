@@ -48,7 +48,7 @@ class SuggestionRequest extends FormRequest
     {
         return [
             //
-            'include' => 'required_without_all:filter,order,limit,page',
+            'include' => 'string',
             'filter' => 'string',
             'order' => 'string',
             'limit' => 'integer',
