@@ -39,9 +39,8 @@ final class InnosabiApiService implements ApiService
         //
         try {
             $endpoint = '/suggestion';
-            // $response = Http::withBasicAuth($this->apiUsername, $this->apiPassword)
-            //     ->get($this->apiUrl.$endpoint, $query);
-            $response = Http::get($this->apiUrl.$endpoint, $query);
+            $response = Http::withBasicAuth($this->apiUsername, $this->apiPassword)
+                ->get($this->apiUrl.$endpoint, $query);
 
             if ($response->failed()) {
                 Log::error('Innosabi API request failed', [
