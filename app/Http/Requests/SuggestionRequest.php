@@ -31,13 +31,12 @@ class SuggestionRequest extends FormRequest
     {
         $extraParams = array_diff(array_keys($this->all()), self::ALLOWED_PARAMS);
 
-        if (!empty($extraParams)) {
+        if (! empty($extraParams)) {
             throw ValidationException::withMessages([
-                'error' => ['Unexpected parameters: ' . implode(', ', $extraParams)],
+                'error' => ['Unexpected parameters: '.implode(', ', $extraParams)],
             ]);
         }
     }
-
 
     /**
      * Get the validation rules that apply to the request.
