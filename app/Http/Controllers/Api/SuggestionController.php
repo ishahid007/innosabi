@@ -9,6 +9,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\SuggestionRequest;
 use App\Http\Resources\SuggestionResource;
 use App\Services\InnosabiApiService;
+//
+use Illuminate\Support\Facades\Cache;
 
 class SuggestionController extends Controller
 {
@@ -22,13 +24,18 @@ class SuggestionController extends Controller
     /**
      * Handle the incoming request.
      * Automatically validates the incoming request
-     * Returns the response from the API service via collection
+     * Returns the suggestion from the API service via collection
      */
     public function __invoke(SuggestionRequest $request): SuggestionResource
     {
         //
-        $response = $this->apiService->fetch($request->validated());
+        $suggestion = Cache::remember('suggestion', 60, function () use ($request) {
+            $response = $this->apiService->fetch($request->validated());
 
-        return new SuggestionResource($response);
+            //
+            return new SuggestionResource($response);
+        });
+
+        return $suggestion;
     }
 }
