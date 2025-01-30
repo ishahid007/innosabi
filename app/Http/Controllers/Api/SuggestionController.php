@@ -13,19 +13,21 @@ use Illuminate\Http\JsonResponse;
 //
 use Illuminate\Support\Facades\Cache;
 
+//
+
 class SuggestionController extends Controller
 {
-    private int $cacheDuration = 1;
+    const int CACHE_DURATION = 60;
 
     /**
      *Can be extended for multiple API services
      *
      * @return void
      */
-    public function __construct(private ApiService $innosabiService)
+    public function __construct(private ApiService $innosabiApiService)
     {
         // Resolve services explicitly
-        $this->innosabiService = app(abstract: 'innosabiApi');
+        $this->innosabiApiService = app(abstract: 'innosabiApi');
     }
 
     /**
@@ -37,8 +39,21 @@ class SuggestionController extends Controller
      */
     public function __invoke(SuggestionRequest $request): SuggestionResource|JsonResponse
     {
-        $response = $this->innosabiService->get('/suggestion', $request->validated());
+        // Cache key
+        $cacheKey = 'suggestion_'.md5(json_encode($request->validated()));
+        $endpoint = '/suggestion';
+        try {
+            $suggestion = Cache::remember($cacheKey, self::CACHE_DURATION, function () use ($request, $endpoint): SuggestionResource {
+                $response = $this->innosabiApiService->get($endpoint, $request->validated());
 
-        return response()->json($response->json());
+                //
+                return new SuggestionResource($response->json());
+            });
+
+            //
+            return $suggestion;
+        } catch (\Exception $e) {
+            return response()->json(['message' => $e->getMessage()], 500);
+        }
     }
 }
