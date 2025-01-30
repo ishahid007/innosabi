@@ -1,5 +1,5 @@
 import { ref, watch, computed } from 'vue'
-import debounce from 'lodash/debounce'; // Use lodash debounce for better performance
+import debounce from 'lodash/debounce';
 import axios from 'axios'
 
 export default function useSuggestions() {
@@ -34,7 +34,7 @@ export default function useSuggestions() {
             let result = response.data;
 
             if (response.status == 200) {
-                suggestions.value = result.data; // Extract the array from the response
+                suggestions.value = result.data; // Extract the suggestions from the response
                 filteredSuggestions.value = suggestions.value;
                 totalPages.value = result.meta.total_pages; // Set the total number of pages
                 currentPage.value = result.meta.current_page; // Set the current page
@@ -65,7 +65,7 @@ export default function useSuggestions() {
         }
     };
 
-    // Highlight search term in text using replaceAll (more efficient than regex)
+    // Highlight search term in text
     const highlightText = (text) => {
         if (!searchTerm.value) return text;
 
@@ -108,7 +108,7 @@ export default function useSuggestions() {
         });
     };
 
-    // Pagination logic
+    // Pagination controls
     const goToPage = (page) => {
         if (page >= 1 && page <= totalPages.value) {
             currentPage.value = page;
