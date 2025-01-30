@@ -20,7 +20,7 @@ final class InnosabiApiService implements ApiService
      * Fetch data from Innosabi API.
      *
      * @param  string  $endpoint  The API endpoint (e.g., "/suggestion")
-     * @param  array  $query  Query parameters (e.g., ["filter" => "active"])
+     * @param  array  $query  Query parameters (e.g., ["include" => "id,title"])
      */
     public function get(string $endpoint, array $query = []): Response
     {
