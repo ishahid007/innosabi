@@ -26,7 +26,6 @@ class SuggestionController extends Controller
     /**
      * Handle the incoming request.
      * Automatically validates the incoming request
-     * Returns the suggestion from the API service via collection
      * Caches the response for 1 minute
      * Returns the response as a resource
      * Only cache if the request is the same
