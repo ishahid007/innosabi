@@ -24,11 +24,7 @@ class SuggestionController extends Controller
      *
      * @return void
      */
-    public function __construct(private ApiService $innosabiApiService)
-    {
-        // Resolve services explicitly
-        $this->innosabiApiService = app(abstract: 'innosabiApi');
-    }
+    public function __construct(private ApiService $innosabiApiService) {}
 
     /**
      * Handle the incoming request.
