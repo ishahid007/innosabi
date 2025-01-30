@@ -4,24 +4,29 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Api;
 
+use App\Contracts\ApiService;
 use App\Http\Controllers\Controller;
 //
 use App\Http\Requests\SuggestionRequest;
 use App\Http\Resources\SuggestionResource;
-use App\Services\InnosabiApiService;
+use Illuminate\Http\JsonResponse;
 //
 use Illuminate\Support\Facades\Cache;
 
 class SuggestionController extends Controller
 {
-    private int $cacheDuration = 60;
+    private int $cacheDuration = 1;
 
     /**
      *Can be extended for multiple API services
      *
      * @return void
      */
-    public function __construct(private InnosabiApiService $apiService) {}
+    public function __construct(private ApiService $innosabiService)
+    {
+        // Resolve services explicitly
+        $this->innosabiService = app(abstract: 'innosabiApi');
+    }
 
     /**
      * Handle the incoming request.
@@ -30,18 +35,10 @@ class SuggestionController extends Controller
      * Returns the response as a resource
      * Only cache if the request is the same
      */
-    public function __invoke(SuggestionRequest $request): SuggestionResource
+    public function __invoke(SuggestionRequest $request): SuggestionResource|JsonResponse
     {
-        // Cache key based on the request
-        $cacheKey = md5(json_encode($request->validated()));
-        //
-        $suggestion = Cache::remember($cacheKey, $this->cacheDuration, function () use ($request) {
-            $response = $this->apiService->fetch($request->validated());
+        $response = $this->innosabiService->get('/suggestion', $request->validated());
 
-            // Return the response as a resource
-            return new SuggestionResource($response);
-        });
-
-        return $suggestion;
+        return response()->json($response->json());
     }
 }
