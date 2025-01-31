@@ -7,60 +7,86 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
 </p>
 
-## About Laravel
+# Innosabi, A Laravel Project
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web project.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Docker Setup
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### Running the Application
 
-## Learning Laravel
+Normally, to run a PHP application, we just need to access it via a browser by entering the address, and the browser will render the page according to the instructions coded in the backend.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+### Docker Setup
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+The Dockerfile has been set up to automatically update all dependencies and composer files. Please follow the steps below:
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+#### Step 1: Build and Bring Up the Containers
 
-## Laravel Sponsors
+Run the following command to build the Docker containers and bring them up:
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+```bash
+docker compose -f deploy/docker-compose.yml --env-file ./.env up --build
+```
 
-### Premium Partners
+2. Access the application:
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+```
+http://localhost:8080
+```
 
-## Contributing
+## Pest Testing Framework (Unit and Feature)
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+This application uses the **Pest PHP** framework for unit and integration testing. Pest is a simple and elegant testing framework for PHP, providing a clean syntax for writing tests.
 
-## Code of Conduct
+### Running Tests
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+To run the tests, use the following command:
 
-## Security Vulnerabilities
+```bash
+./vendor/bin/pest
+```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+## Services
 
-## License
+2. A Unique Class inside App\Services\InnosabiApiService was used to request HTTP calls to the api from Innosabi.com
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+## Resources
+
+App\Http\Resources are used to modify any output response or behaviour towards the REST API request
+
+## Request
+
+'App\Http\Requests' were used to validate the user preference request all the time.
+
+## Cache
+
+The default cache duration is set to 60 seconds in the SuggestionController. This caching strategy is used to reduce the number of redundant API calls and improve the application's overall performance.
+
+## Rate Limit
+
+The rate limit middleware is used to restrict the number of requests a user can make to the API within a specified time frame. The rate limit is set to 60 requests per minute in the RateLimitMiddleware class.
+
+## Pint
+
+Laravel Pint was used for code style so it stays clean and consistent.
+To run Pint, use the following command:
+
+```bash
+./vendor/bin/pint
+```
+
+### Explanation of the Content:
+
+1. **About the Project**: Describes the project's purpose—using Laravel to interface with APIs and cache data for performance improvements.
+2. **Docker Setup**: Provides step-by-step instructions on how to set up and run the application with Docker.
+3. **Pest Testing Framework**: Explains how to run the tests using Pest PHP.
+4. **Services**: Details how API requests are handled using the `InnosabiApiService` class.
+5. **Resources**: Explains how responses to REST API requests are modified using Laravel's resource classes.
+6. **Request Validation**: Shows how user input is validated using Laravel's request validation.
+7. **Cache**: Explains caching strategies to improve performance, including an example using Laravel's Cache facade.
+8. **Rate Limit**: Describes rate limiting for API calls and provides an example middleware for rate-limiting requests.
+9. **Pint**: Details how Laravel Pint is used to enforce code style consistency.
+10. **Troubleshooting**: Lists common issues and their solutions for Docker setup.
+11. **Composer Dependencies**: Lists key dependencies used in the project.
+12. **Conclusion**: A final note summarizing the project's goals and setup.
