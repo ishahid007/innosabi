@@ -11,13 +11,75 @@
 
 Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web project.
 
+## Prerequiste
+
+-   Docker
+-   Docker Compose
+-   Composer
+-   Apache HTTP Server (Optional, already bundled in docker-compose)
+-   PHP 8.3 (Optional, already bundled in docker-compose)
+
+## Installation
+
+After cloning the repository, you may need to install the dependencies using composer.
+
+```
+composer install
+```
+
+Copy (Clone) the .env.example file and update it with your values
+
+```
+cp .env.example .env
+```
+
+Add Database and API's configuration in the .env file
+
+```
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=innosabi
+DB_USERNAME=root
+DB_PASSWORD=password
+```
+
+You should set the valid relative API KEY.
+The API KEY's are responsible for fetching the regular updated content from the relative api source.
+
+```
+INNOSABI_API_URL=''
+INNOSABI_API_USERNAME=''
+INNOSABI_API_PASSWORD=''
+```
+
+Set the prefered Cache Duration for your application in the .env file as well.
+
+
+Generate Application key
+
+```
+php artisan key:generate
+```
+
+Run the Laravel Migrations
+
+```
+php artisan migrate
+```
+Run the application
+
+```
+php artisan serve
+```
+
 ## Docker Setup
 
 ### Running the Application
 
 Normally, to run a PHP application, we just need to access it via a browser by entering the address, and the browser will render the page according to the instructions coded in the backend.
 
-### Docker Setup
+### Docker Setup (Alternative)
 
 The Dockerfile has been set up to automatically update all dependencies and composer files. Please follow the steps below:
 

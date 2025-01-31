@@ -40,6 +40,9 @@ RUN composer install --no-dev --prefer-dist \
 RUN chown -R www-data:www-data /var/www/html/vendor \
     && chmod -R 775 /var/www/html/vendor
 
+# Run php artisan migrate
+RUN php artisan migrate --force
+
 # stage 2: production stage
 FROM php:8.3-fpm-alpine
 
