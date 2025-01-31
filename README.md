@@ -87,6 +87,8 @@ The Dockerfile has been set up to automatically update all dependencies and comp
 
 Run the following command to build the Docker containers and bring them up:
 
+1. Make sure to copy the .env.example file to .env and update it with your values.
+
 ```bash
 docker compose -f deploy/docker-compose.yml --env-file ./.env up --build
 ```
